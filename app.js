@@ -28,8 +28,6 @@ async function dataBaseServer() {
   console.log(`Server listen on ${PORT} port`);
 }
 
-dataBaseServer();
-
 app.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
@@ -53,3 +51,10 @@ app.use((req, res, next) => {
   next(new NotFoundError('Такой страницы не существует.'));
 });
 app.use(errors());
+app.use((err, req, res, next) => {
+  const { statusCode = 500, message } = err;
+  res.status(statusCode).send({ message: statusCode === 500 ? 'На сервере произошла ошибка.' : message });
+  next();
+});
+
+dataBaseServer();

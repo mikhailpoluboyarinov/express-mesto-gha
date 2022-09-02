@@ -4,7 +4,6 @@ const User = require('../models/user');
 const NotFoundError = require('../errors/notFoundError404');
 const ConflictError = require('../errors/conflictError409');
 const BadRequestError = require('../errors/badRequestError400');
-const UnauthorizedError = require('../errors/unauthorizedError401');
 
 const getUsers = (req, res, next) => {
   User.find({})
@@ -20,7 +19,7 @@ const getUser = (req, res, next) => {
   User.findById(req.params.userId)
     .then((user) => {
       if (!user) {
-        next(new NotFoundError('Пользователь с указанным _id не найден.'));
+        throw next(new NotFoundError('Пользователь с указанным _id не найден.'));
       }
       res.send(user);
     })
@@ -42,7 +41,7 @@ const editUser = (req, res, next) => {
   })
     .then((user) => {
       if (!user) {
-        next(new NotFoundError('Пользователь с указанным _id не найден.'));
+        throw next(new NotFoundError('Пользователь с указанным _id не найден.'));
       }
       res.send(user);
     })
@@ -93,7 +92,7 @@ const updateAvatar = (req, res, next) => {
   })
     .then((user) => {
       if (!user) {
-        next(new NotFoundError('Пользователь с указанным _id не найден.'));
+        throw next(new NotFoundError('Пользователь с указанным _id не найден.'));
       }
       res.send(user);
     })
@@ -115,9 +114,7 @@ const login = (req, res, next) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'secret-key', { expiresIn: '7d' });
       res.send({ token });
     })
-    .catch(() => {
-      next(new UnauthorizedError('Неправильные почта или пароль'));
-    });
+    .catch(next);
 };
 
 module.exports = {
