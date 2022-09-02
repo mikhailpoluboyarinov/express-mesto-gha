@@ -39,7 +39,7 @@ const deleteCard = (req, res, next) => {
       if (!card) {
         throw new NotFoundError('Карточка с указанным _id не найдена.');
       } if (card.owner.toString() !== ownerId) {
-        throw next(new ForbiddenError('Вы не можете удалить эту карточку.'));
+        throw new ForbiddenError('Вы не можете удалить эту карточку.');
       }
       return Card.findOneAndRemove({ _id: cardId })
         .then(() => {
@@ -63,7 +63,7 @@ const dislikeCard = (req, res, next) => {
   )
     .then((card) => {
       if (!card) {
-        throw next(new NotFoundError('Передан несуществующий _id карточки.'));
+        throw new NotFoundError('Передан несуществующий _id карточки.');
       }
       res.send(card);
     })
@@ -84,7 +84,7 @@ const likeCard = (req, res, next) => {
   )
     .then((card) => {
       if (!card) {
-        throw next(new NotFoundError('Передан несуществующий _id карточки.'));
+        throw new NotFoundError('Передан несуществующий _id карточки.');
       }
       res.send(card);
     })

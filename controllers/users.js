@@ -19,7 +19,7 @@ const getUser = (req, res, next) => {
   User.findById(req.params.userId)
     .then((user) => {
       if (!user) {
-        throw next(new NotFoundError('Пользователь с указанным _id не найден.'));
+        throw new NotFoundError('Пользователь с указанным _id не найден.');
       }
       res.send(user);
     })
@@ -41,7 +41,7 @@ const editUser = (req, res, next) => {
   })
     .then((user) => {
       if (!user) {
-        throw next(new NotFoundError('Пользователь с указанным _id не найден.'));
+        throw new NotFoundError('Пользователь с указанным _id не найден.');
       }
       res.send(user);
     })
@@ -92,7 +92,7 @@ const updateAvatar = (req, res, next) => {
   })
     .then((user) => {
       if (!user) {
-        throw next(new NotFoundError('Пользователь с указанным _id не найден.'));
+        throw new NotFoundError('Пользователь с указанным _id не найден.');
       }
       res.send(user);
     })
