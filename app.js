@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const { errors, Joi, celebrate } = require('celebrate');
 const { createUser, login } = require('./controllers/users');
 const auth = require('./middlewares/auth');
+const cors = require('./middlewares/cors');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const NotFoundError = require('./errors/notFoundError404');
 
 const usersRouter = require('./routes/users');
@@ -28,6 +30,9 @@ async function dataBaseServer() {
   console.log(`Server listen on ${PORT} port`);
 }
 
+app.use(requestLogger); // подключаем логгер запросов
+app.use(cors);
+
 app.post('/signin', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
@@ -50,6 +55,7 @@ app.use('/', auth, cardsRouter);
 app.use((req, res, next) => {
   next(new NotFoundError('Такой страницы не существует.'));
 });
+app.use(errorLogger); // подключаем логгер ошибок
 app.use(errors());
 app.use((err, req, res, next) => {
   const { statusCode = 500, message } = err;
