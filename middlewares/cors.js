@@ -1,7 +1,7 @@
 const allowedCors = [
-  'https://mestompoluboyarinov.nomoredomains.sbs/',
-  'http://mestompoluboyarinov.nomoredomains.sbs/',
-  'http://localhost:3000/',
+  'https://mestompoluboyarinov.nomoredomains.sbs',
+  'http://mestompoluboyarinov.nomoredomains.sbs',
+  'http://localhost:3000',
 ];
 
 const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
