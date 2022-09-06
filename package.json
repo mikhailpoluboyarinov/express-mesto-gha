@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node ./app.js",
     "dev": "nodemon ./app.js",
-    "lint": "npx eslint ."
+    "lint": "npx eslint .",
+    "deploy": "scp -r * mpoluboyarinov@158.160.5.164:/home/mpoluboyarinov/backend"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
     "celebrate": "^15.0.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.2",
     "express": "^4.18.1",
     "express-winston": "^4.2.0",
     "jsonwebtoken": "^8.5.1",
